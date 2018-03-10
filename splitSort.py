@@ -2,6 +2,7 @@
 #by Jonathan Nguyen
 import math
 import time
+import random
 
 def splitSort(array):
     #head splitSort function, just takes an array
@@ -11,12 +12,16 @@ def splitSort(array):
     arrayNeg = map(lambda x: x*-1, filter(lambda x: x<0, noRepeats))
     arrayPos = filter(lambda x: x>=0, noRepeats)
     #sort the processed lists
-    posSortedList = splitSortRecursive(arrayPos)
-    negSortedList = splitSortRecursive(arrayNeg)
-    #put negative numbers in appropriate order
-    negSortedList = map(lambda x: x*-1, negSortedList)
-    negSortedList.reverse()
-    #join both lists together
+    posSortedList = []
+    negSortedList = []
+    if len(arrayPos) > 0:
+        posSortedList = splitSortRecursive(arrayPos)
+    if len(arrayNeg) > 0:
+        negSortedList = splitSortRecursive(arrayNeg)
+        #put negative numbers in appropriate order
+        negSortedList = map(lambda x: x*-1, negSortedList)
+        negSortedList.reverse()
+        #join both lists together
     sortedList = negSortedList + posSortedList
     #make final lists with the repeats
     finalList = []
@@ -76,17 +81,19 @@ def findRepetitions(array):
         else:
             repetitions[n] += 1
     return [noRepeats, repetitions]
-            
+
+
 def main():
     #test function
     #gimmeList = [34,35]
     #gimmeList = [-5, -12, 0, 124, 24]
-    gimmeList = [1,9,56,322,4,300,17,74,1024,34561,0, 17893,-53,642, 124, 0, 25309, 4875, -241, 34, 21, 123523, -24.1244, -10, -11, 412390582308957, 0, 35, 12, 141,7465, 123908.234, -123.11235, 7465,3457, 86, 65.124, -12, 12, .0123, .00142]
+    #gimmeList = [5,4,3,2,1]
+    gimmeList = [1,9,56,322,4,300,17,74,1024,34561,0, 17893,-53,642, 124, 0, 25309, 4875, -241, 34, 21, 123523, -24.1244, -10, -11, 412390582308957, 0, 35, 12, 141,7465, 123908.234, -123.11235, 7465,3457, 86, 65.124, -12, 12, .0123, .00142, 134, 1235, 12, 124, 39, 210, 0.315, 124, -197, 87, 56, -87, 354, 219, -1, 53,18,936, 219, -2935]
     initialTime = time.time()
     sortedList = splitSort(gimmeList)
     finalTime = time.time()-initialTime
     print(sortedList)
-    print("Took %f seconds" % (finalTime))
+    
 
 if __name__ == "__main__":
     main()
